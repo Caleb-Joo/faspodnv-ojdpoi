@@ -165,7 +165,7 @@ public class SortingMachine3<T> extends SortingMachineSecondary<T> {
         assert x != null : "Violation of: x is not null";
         assert this.isInInsertionMode() : "Violation of: this.insertion_mode";
 
-        // TODO #2 - insert x into machine contents (keep it sorted)
+        insertInOrder(this.entries, x, this.machineOrder);
 
     }
 
@@ -173,7 +173,7 @@ public class SortingMachine3<T> extends SortingMachineSecondary<T> {
     public final void changeToExtractionMode() {
         assert this.isInInsertionMode() : "Violation of: this.insertion_mode";
 
-        // TODO #3 - switch machine from insertion to extraction mode
+        this.insertionMode = false;
 
     }
 
@@ -183,37 +183,25 @@ public class SortingMachine3<T> extends SortingMachineSecondary<T> {
                 .isInInsertionMode() : "Violation of: not this.insertion_mode";
         assert this.size() > 0 : "Violation of: this.contents /= {}";
 
-        // TODO #4 - remove and return first entry in machine contents
-
-        // This line added just to make the component compilable.
-        return null;
+        return this.entries.dequeue();
     }
 
     @Override
     public final boolean isInInsertionMode() {
 
-        // TODO #5 - report whether machine is in insertion mode
-
-        // This line added just to make the component compilable.
-        return false;
+        return this.insertionMode;
     }
 
     @Override
     public final Comparator<T> order() {
 
-        // TODO #6 - report order used by machine
-
-        // This line added just to make the component compilable.
-        return null;
+        return this.machineOrder;
     }
 
     @Override
     public final int size() {
 
-        // TODO #7 - report size of machine contents
-
-        // This line added just to make the component compilable.
-        return 0;
+        return this.entries.length();
     }
 
     @Override

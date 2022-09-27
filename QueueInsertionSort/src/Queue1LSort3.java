@@ -61,35 +61,27 @@ public final class Queue1LSort3<T> extends Queue1L<T> {
         assert q != null : "Violation of: q is not null";
         assert x != null : "Violation of: x is not null";
         assert order != null : "Violation of: order is not null";
-        //declare variables and a temp Q
-        boolean endPositionFound = false;
-        Queue<T> tempQ = q.newInstance();
-        T tempVar = null;
-        //while the end position has not been found
-        while (!endPositionFound) {
-            //dequeue the first var if q is not zero
-            if (q.length() != 0) {
-                tempVar = q.dequeue();
-            }
-            //compare tempvar to the variable trying to be inserted
-            int compareResult = order.compare(tempVar, x);
-            //if either x comes now (as the current spot is larger) or
-            //there are no more variables to remove
-            if (compareResult > 0 || q.length() <= 1) {
-                //declare end position found and then insert them back into q
-                endPositionFound = true;
-                q.flip();
-                q.enqueue(tempVar);
-                //if position not found then put the current tempVar into the
-                //temp queue to repeat the process
+
+        Queue<T> q2 = new Queue1L<T>();
+        int count = 0;
+        boolean insert = false;
+        int length = q.length();
+        while (count < length && !insert) {
+            T y = q.dequeue();
+            if (order.compare(x, y) <= 0) {
+                q2.enqueue(x);
+                q2.enqueue(y);
+                insert = true;
             } else {
-                tempQ.enqueue(tempVar);
+                q2.enqueue(y);
             }
+            count++;
         }
-        while (tempQ.length() >= 0) {
-            q.enqueue(tempQ.dequeue());
+        q2.append(q);
+        if (!insert) {
+            q2.enqueue(x);
         }
-        q.flip();
+        q.transferFrom(q2);
 
     }
 
